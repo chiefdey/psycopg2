@@ -52,12 +52,17 @@
       <script>new Chart(document.getElementById("bar-chart"), {
          type: 'bar',
          data: {
-           labels: ["Africa", "Asia", "Europe", "Latin America", "North America"],
+           labels: {{ pname | safe }},
            datasets: [
              {
-               label: "Population (millions)",
+               label: "sales",
                backgroundColor: ["#3e95cd", "#8e5ea2","#3cba9f","#e8c3b9","#c45850"],
-               data: [2478,5267,734,784,433]
+               data: {{ psales | safe }}
+             },
+             {
+               label: "profit",
+               backgroundColor: ["#3e95cd", "#8e5ea2","#3cba9f","#e8c3b9","#c45850"],
+               data: {{ prof | safe }}
              }
            ]
          },
@@ -65,7 +70,7 @@
            legend: { display: false },
            title: {
              display: true,
-             text: 'Predicted world population (millions) in 2050'
+             text: 'sales per product'
            }
          }
      });</script>

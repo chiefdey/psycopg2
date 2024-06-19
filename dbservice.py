@@ -73,21 +73,22 @@ insert_sales(y)
 getdata("sales")
 
 # SALES PER PRODUCT
-# def sales_prod():
-#     query="SELECT SUM(sales.quantity * products.selling_price),products.name from products \
-#         INNER JOIN sales on (products.id=sales.productid) GROUP BY products.name ORDER BY SUM DESC;"
-#     cur.execute(query)
-#     s_p=cur.fetchall()
-#     print(s_p)
-# sales_prod()
+def sales_prod():
+    query="SELECT products.name ,SUM(sales.quantity * products.selling_price) from products \
+        INNER JOIN sales on (products.id=sales.productid) GROUP BY products.name ORDER BY SUM DESC;"
+    cur.execute(query)
+    s_p=cur.fetchall()
+    return s_p
+sales_prod()
+
 # # PROFIT PER PRODUCT
-# def profit():
-#     query=" SELECT SUM(sales.quantity * (products.selling_price-products.buying_price)),products.name from products \
-#         INNER JOIN sales on (products.id=sales.productid) GROUP BY products.name ORDER BY SUM DESC;"
-#     cur.execute(query)
-#     pr=cur.fetchall()
-#     print(pr)
-# profit()
+def profit():
+    query=" SELECT SUM(sales.quantity * (products.selling_price-products.buying_price)),products.name from products \
+        INNER JOIN sales on (products.id=sales.productid) GROUP BY products.name ORDER BY SUM DESC;"
+    cur.execute(query)
+    pr=cur.fetchall()
+    return pr
+profit()
 # # SALES PER DAY
 # def daysales():
 #     query="Select SUM(sales.quantity * products.selling_price),date(sales.created_at) from products\
