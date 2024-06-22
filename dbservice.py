@@ -90,19 +90,51 @@ def profit():
     return pr
 profit()
 # # SALES PER DAY
-# def daysales():
-#     query="Select SUM(sales.quantity * products.selling_price),date(sales.created_at) from products\
-#           INNER JOIN sales on (products.id=sales.productid) GROUP BY date(sales.created_at) ORDER BY SUM DESC;"
-#     cur.execute(query)
-#     day=cur.fetchall()
-#     print(day)
-# daysales()
+def daysales():
+    query="Select SUM(sales.quantity * products.selling_price),date(sales.created_at) from products\
+          INNER JOIN sales on (products.id=sales.productid) GROUP BY date(sales.created_at) ORDER BY SUM DESC;"
+    cur.execute(query)
+    day=cur.fetchall()
+    return day
+daysales()
 
-# # PROFIT PER DAY
-# def dayprofit():
-#     query="Select SUM(sales.quantity * (products.selling_price-products.buying_price)),date(sales.created_at) from products\
-#           INNER JOIN sales on (products.id=sales.productid) GROUP BY date(sales.created_at) ORDER BY date(sales.created_at);"
-#     cur.execute(query)
-#     day=cur.fetchall()
-#     print(day)
-# dayprofit()
+# PROFIT PER DAY
+def dayprofit():
+    query="Select SUM(sales.quantity * (products.selling_price-products.buying_price)),date(sales.created_at) from products\
+          INNER JOIN sales on (products.id=sales.productid) GROUP BY date(sales.created_at) ORDER BY date(sales.created_at);"
+    cur.execute(query)
+    day=cur.fetchall()
+    return day
+dayprofit()
+# display total sales 
+def totalsales():
+    query="Select SUM(sales.quantity * products.selling_price) from products  INNER JOIN sales on (products.id=sales.productid);"
+    cur.execute(query)
+    ts=cur.fetchall()
+    return ts
+totalsales()
+# display todays sales
+def todaysales(x):
+    query=f"Select SUM(sales.quantity * products.selling_price),date({x}) from products\
+          INNER JOIN sales on (products.id=sales.productid) GROUP BY date({x}) ORDER BY SUM DESC;"
+    cur.execute(query)
+    t_s=cur.fetchall()
+    return t_s
+todaysales("datetoday")
+# display total profit
+def totalprofit():
+    query="Select SUM(sales.quantity * (products.selling_price-products.buying_price)) from products\
+          INNER JOIN sales on (products.id=sales.productid);"
+    cur.execute(query)
+    ttl=cur.fetchall()
+    return ttl
+totalprofit()
+# display todays profit
+def todayprofit(y):
+    query=f"Select SUM(sales.quantity * (products.selling_price-products.buying_price)),date({y}) from products\
+          INNER JOIN sales on (products.id=sales.productid) GROUP BY date({y}) ORDER BY SUM;"
+    cur.execute(query)
+    t_p=cur.fetchall()
+    return t_p
+todayprofit("datetoday")
+    

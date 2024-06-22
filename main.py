@@ -1,5 +1,5 @@
 from flask import Flask,render_template,redirect,request,url_for
-from dbservice import getdata,insert_product,insert_sales,sales_prod,profit
+from dbservice import getdata,insert_product,insert_sales,sales_prod,profit,daysales,dayprofit
 # create the flask instance
 app=Flask(__name__)
 
@@ -57,7 +57,19 @@ def dashboard():
     prof=[]
     for i in pp:
         prof.append(i[0])
-    return render_template('home.html',pname=pname,psales=psales,prof=prof)
+    # sales per day
+    d_s=daysales()
+    dys=[]
+    s_d=[]
+    for i in d_s:
+        dys.append(str(i[1]))
+        s_d.append(i[0])
+# profit per day
+    d_p=dayprofit()
+    pd=[]
+    for i in d_p:
+        pd.append(i[0])
+    return render_template('home.html',pname=pname,psales=psales,prof=prof,dys=dys,s_d=s_d,pd=pd)
 
 
 app.run(debug=True)
