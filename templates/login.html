@@ -1,0 +1,12 @@
+{% extends "layout.html" %}
+{% block title %}LOGIN{% endblock %}
+{% block content %}
+<div class="container-fluid" style="display:flex; justify-content: center;">
+   <form action="/login" name="log-in" method="post">
+      <h2>LOG-IN :</h2>
+      <input type="email" name="email" placeholder="email"><br>
+      <input type="password" name="password" placeholder="password"><br>
+      <input type="submit" placeholder="register">
+   </form>
+</div>
+{% endblock %}

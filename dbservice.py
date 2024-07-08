@@ -64,6 +64,7 @@ def insert_product(values):
 x=("biscuits",100,150,55)
 insert_product(x)
 
+
 def insert_sales(values):
     query="insert into sales(productid,quantity,created_at) values(%s,%s,now())"
     cur.execute(query,values)
@@ -114,13 +115,12 @@ def totalsales():
     return ts
 totalsales()
 # display todays sales
-def todaysales(x):
-    query=f"Select SUM(sales.quantity * products.selling_price),date({x}) from products\
-          INNER JOIN sales on (products.id=sales.productid) GROUP BY date({x}) ORDER BY SUM DESC;"
+def todaysales():
+    query="Select SUM(sales.quantity * products.selling_price),date(sales.created_at) AS salesday from products INNER JOIN sales on (products.id=sales.productid) GROUP BY salesday ORDER BY salesday DESC LIMIT 1;"
     cur.execute(query)
     t_s=cur.fetchall()
     return t_s
-todaysales("datetoday")
+todaysales()
 # display total profit
 def totalprofit():
     query="Select SUM(sales.quantity * (products.selling_price-products.buying_price)) from products\
@@ -130,11 +130,36 @@ def totalprofit():
     return ttl
 totalprofit()
 # display todays profit
-def todayprofit(y):
-    query=f"Select SUM(sales.quantity * (products.selling_price-products.buying_price)),date({y}) from products\
-          INNER JOIN sales on (products.id=sales.productid) GROUP BY date({y}) ORDER BY SUM;"
+def todayprofit():
+    query="Select SUM(sales.quantity * products.selling_price-products.buying_price),date(sales.created_at) AS salesday from products\
+          INNER JOIN sales on (products.id=sales.productid) GROUP BY salesday ORDER BY salesday DESC LIMIT 1;"
     cur.execute(query)
     t_p=cur.fetchall()
     return t_p
-todayprofit("datetoday")
-    
+todayprofit()
+# display recent sales
+def recent():
+    query="Select SUM(sales.quantity * products.selling_price-products.buying_price),date(sales.created_at) AS salesday from products\
+          INNER JOIN sales on (products.id=sales.productid) GROUP BY salesday ORDER BY salesday DESC LIMIT 10;"
+    cur.execute(query)
+    r_s=cur.fetchall()
+    return r_s
+recent()
+# insert users
+def insert_users(values):
+    query="insert into users(first_name,last_name,email,password) values(%s,%s,%s,%s);"
+    cur.execute(query,values)
+    conn.commit()
+
+def verify(email):
+    query = "select * from users WHERE email=(%s);"
+    cur.execute(query,(email,))
+    user=cur.fetchall()
+    return user
+def check_ep(e,p):
+    query="select * from users WHERE email=(%s) and password=(%s)"
+    cur.execute(query,(e,p,))
+    data=cur.fetchall()
+    return data
+
+

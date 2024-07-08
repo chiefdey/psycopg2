@@ -1,0 +1,14 @@
+{% extends "layout.html" %}
+{% block title %}REGISTER{% endblock %}
+{% block content %}
+<div class="container-fluid" style="display:flex; justify-content: center;">
+   <form action="" method="post">
+      <h2>Fill-in below to register:</h2>
+      <input type="text" name="first_name" placeholder="first_name"><br>
+      <input type="text" name="last_name" placeholder="last_name"><br>
+      <input type="email" name="email" placeholder="email"><br>
+      <input type="text" name="password" placeholder="password"><br>
+      <input type="submit" placeholder="register">
+   </form>
+</div>
+  {% endblock %}
