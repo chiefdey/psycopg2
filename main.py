@@ -6,7 +6,11 @@ app.secret_key="muriithi"
 # first route
 @app.route('/')
 def layout():
-    return render_template('layout.html')
+    emils=None
+    if 'email' in session:
+        emils=session['email']
+
+    return render_template('layout.html',emils=emils)
 
 # routes connect url with the function
 @app.route('/products')
@@ -94,6 +98,7 @@ def register():
         # print(verification)
         if len(verification) == 0:
             insert_users(user)
+            flash("registration successful login to continue:","success")
             return redirect(url_for("login"))
         else:
             flash("user already exist","error")
@@ -117,11 +122,12 @@ def login():
         else:
             flash("email does not exist","error")
             return redirect(url_for("register"))
-            
+
     return render_template("login.html")
 @app.route("/logout")
 def logout():
     session.pop("email",None)
+    flash("logged out successfully","success")
     return redirect(url_for("login"))
 
 
